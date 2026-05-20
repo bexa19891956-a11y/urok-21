@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notitanic — Gleb Kostrubov</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan: #00c2e8;
+  --cyan-dark: #009bb8;
+  --yellow: #f5a623;
+  --yellow-dark: #d4890a;
+  --bg: #2a2d31;
+  --bg2: #23262a;
+  --bg3: #1d2023;
+  --card: #32363b;
+  --card2: #2d3136;
+  --text: #e8eaed;
+  --muted: #8c9099;
+  --border: rgba(255,255,255,0.07);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 60px;
+  background: rgba(36,39,43,0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo svg { width: 36px; height: 36px; }
+.nav-logo-text { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 20px; color: var(--text); letter-spacing: 1px; }
+.nav-links { display: flex; gap: 44px; }
+.nav-links a {
+  font-size: 15px; color: var(--muted);
+  transition: color 0.2s; position: relative; padding-bottom: 4px;
+}
+.nav-links a.active, .nav-links a:hover { color: var(--text); }
+.nav-links a.active::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px; background: var(--text);
+}
+
+/* ── HERO ── */
+#home {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 100px 60px 60px;
+  position: relative; overflow: hidden;
+}
+.hero-bg-circle {
+  position: absolute; right: 280px; top: 50%; transform: translateY(-50%);
+  width: 420px; height: 420px; border-radius: 50%;
+  border: 40px solid var(--cyan);
+  opacity: 0.9;
+  animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.9;transform:translateY(-50%) scale(1)} 50%{opacity:.75;transform:translateY(-50%) scale(1.03)} }
+.hero-bg-circle-inner {
+  position: absolute; right: 280px; top: 50%; transform: translateY(-50%);
+  width: 340px; height: 340px; border-radius: 50%;
+  background: var(--bg3);
+  border: none;
+}
+.hero-text { flex: 1; max-width: 560px; z-index: 2; }
+.hero-hello { font-size: 28px; font-weight: 300; color: var(--muted); margin-bottom: 8px; letter-spacing: 2px; }
+.hero-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 72px; line-height: 0.95; color: var(--text); letter-spacing: -1px; margin-bottom: 24px; }
+.hero-desc { font-size: 15px; color: var(--muted); line-height: 1.8; max-width: 420px; margin-bottom: 36px; }
+.btn-yellow {
+  display: inline-block; background: var(--yellow); color: #1a1200;
+  font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 14px 36px; border-radius: 6px; transition: background 0.2s, transform 0.2s;
+}
+.btn-yellow:hover { background: var(--yellow-dark); transform: translateY(-2px); }
+
+/* skill bubbles around avatar */
+.hero-visual { position: absolute; right: 60px; top: 50%; transform: translateY(-50%); z-index: 2; }
+.avatar-wrap { position: relative; width: 420px; height: 420px; }
+.avatar-img {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 340px; height: 420px; object-fit: cover; object-position: top;
+  border-radius: 12px;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5));
+}
+.skill-bubble {
+  position: absolute; background: var(--card); border-radius: 50%;
+  width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 16px; color: var(--cyan);
+  border: 2px solid rgba(0,194,232,0.3);
+  animation: float 3s ease-in-out infinite;
+}
+.skill-bubble:nth-child(2){ top: 120px; left: 10px; animation-delay: 0s; }
+.skill-bubble:nth-child(3){ top: 240px; left: -10px; animation-delay: 0.8s; }
+.skill-bubble:nth-child(4){ top: 80px; right: 0; animation-delay: 1.6s; font-size: 13px; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* ── SKILLS SECTION ── */
+#skills {
+  padding: 100px 60px;
+  background: var(--bg2);
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 900px; margin: 0 auto;
+}
+.skills-row2 {
+  display: flex; justify-content: center; gap: 20px;
+  margin-top: 20px;
+}
+.skill-card {
+  background: var(--card); border-radius: 20px; padding: 40px 20px 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  cursor: default; transition: transform 0.25s, background 0.25s;
+  border: 1px solid var(--border);
+  min-width: 190px;
+}
+.skill-card:hover { transform: translateY(-6px); background: var(--card2); }
+.skill-icon { font-size: 36px; color: var(--cyan); line-height: 1; }
+.skill-icon-text { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 28px; color: var(--cyan); }
+.skill-name { font-size: 14px; color: var(--muted); font-weight: 400; }
+
+/* ── ABOUT ── */
+#about {
+  padding: 100px 60px;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.about-deco {
+  position: absolute; border-radius: 50%;
+  border: 50px solid transparent; pointer-events: none;
+}
+.about-deco.gray { width: 400px; height: 400px; border-color: rgba(255,255,255,0.05); left: -100px; top: 50px; border-right-color: transparent; }
+.about-deco.yellow { width: 200px; height: 200px; border-color: transparent; border-top: 50px solid rgba(245,166,35,0.6); right: 80px; top: 30px; }
+.about-deco.cyan { width: 180px; height: 180px; border-bottom: 50px solid rgba(0,194,232,0.6); right: 110px; bottom: 60px; border-top-color: transparent; }
+.about-inner { display: flex; gap: 60px; align-items: flex-start; max-width: 1100px; width: 100%; position: relative; z-index: 2; }
+.about-photos { display: flex; flex-direction: column; gap: 20px; flex-shrink: 0; }
+.about-photos img { width: 200px; height: 240px; object-fit: cover; border-radius: 12px; filter: saturate(0.85); }
+.about-right { display: flex; flex-direction: column; gap: 20px; }
+.about-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 42px; letter-spacing: 4px; color: var(--text); margin-bottom: 16px; }
+.about-text { font-size: 14px; color: var(--muted); line-height: 1.85; }
+.about-photo-right img { width: 220px; height: 280px; object-fit: cover; border-radius: 12px; filter: saturate(0.8); }
+
+/* ── PORTFOLIO ── */
+#portfolio {
+  padding: 100px 60px;
+  background: var(--bg2);
+}
+.section-title-center { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 38px; text-align: center; letter-spacing: 6px; color: var(--text); margin-bottom: 60px; }
+.portfolio-card {
+  background: var(--card); border-radius: 20px; overflow: hidden;
+  max-width: 960px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative;
+  border: 1px solid var(--border);
+}
+.portfolio-preview {
+  padding: 30px; background: var(--card2);
+  display: flex; align-items: center; justify-content: center;
+}
+.portfolio-preview img { width: 100%; border-radius: 10px; object-fit: cover; max-height: 340px; }
+.portfolio-info { padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+.portfolio-info h3 { font-family: 'Rajdhani', sans-serif; font-size: 26px; font-weight: 600; color: var(--text); }
+.portfolio-info p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+.portfolio-more { color: var(--yellow); font-size: 14px; font-weight: 500; }
+.portfolio-more:hover { text-decoration: underline; }
+.port-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 50px; height: 50px; border-radius: 50%; background: var(--yellow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: #1a1200; cursor: pointer; z-index: 10;
+  transition: background 0.2s;
+  border: none; outline: none;
+}
+.port-arrow:hover { background: var(--yellow-dark); }
+.port-arrow.left { left: -25px; }
+.port-arrow.right { right: -25px; }
+
+/* ── CONTACT FOOTER ── */
+#contact {
+  padding: 70px 60px 50px;
+  background: var(--bg3);
+}
+.footer-inner { max-width: 900px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border); align-items: start; }
+.footer-links h4, .footer-contact h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 16px; }
+.footer-links ul, .footer-contact ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a, .footer-contact li { font-size: 14px; color: var(--muted); transition: color 0.2s; }
+.footer-links a:hover { color: var(--cyan); }
+.footer-brand { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.footer-brand svg { width: 48px; height: 48px; }
+.footer-brand .brand-name { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 2px; }
+.scroll-top {
+  width: 44px; height: 44px; border-radius: 50%; background: var(--yellow);
+  display: flex; align-items: center; justify-content: center;
+  color: #1a1200; font-size: 18px; cursor: pointer;
+  transition: background 0.2s; border: none; outline: none;
+  text-decoration: none;
+}
+.scroll-top:hover { background: var(--yellow-dark); }
+.footer-bottom { display: flex; justify-content: center; padding-top: 24px; }
+.footer-bottom span { font-size: 12px; color: var(--muted); }
+
+@media(max-width:900px) {
+  nav { padding: 16px 24px; }
+  #home, #skills, #about, #portfolio, #contact { padding: 80px 24px; }
+  .hero-name { font-size: 48px; }
+  .hero-visual { display: none; }
+  .hero-bg-circle, .hero-bg-circle-inner { display: none; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-inner { flex-direction: column; }
+  .portfolio-card { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="20,4 36,28 4,28" stroke="#00c2e8" stroke-width="2.5" fill="none"/>
+      <line x1="4" y1="28" x2="36" y2="28" stroke="#00c2e8" stroke-width="2.5"/>
+      <line x1="20" y1="28" x2="20" y2="36" stroke="#00c2e8" stroke-width="2.5"/>
+      <line x1="4" y1="36" x2="36" y2="36" stroke="#00c2e8" stroke-width="2.5"/>
+    </svg>
+    <span class="nav-logo-text">notitanic</span>
+  </div>
+  <div class="nav-links">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About me</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg-circle-inner"></div>
+  <div class="hero-bg-circle"></div>
+  <div class="hero-text">
+    <div class="hero-hello">HELLO</div>
+    <div class="hero-name">I'M GLEB<br>KOSTRUBOV</div>
+    <p class="hero-desc">I've been doing web design, front-end and back-end development for a year now. Do you need a website design, site layout, or maybe a turnkey website? Then contact me</p>
+    <a href="#contact" class="btn-yellow">CONTACT ME</a>
+  </div>
+  <div class="hero-visual">
+    <div class="avatar-wrap">
+      <div class="skill-bubble" style="top:110px;left:0;">&lt;/&gt;</div>
+      <div class="skill-bubble" style="top:240px;left:-20px;">UX</div>
+      <div class="skill-bubble" style="top:80px;right:-10px;">UI</div>
+      <div class="skill-bubble" style="top:220px;right:-20px;">PS</div>
+      <img class="avatar-img"
+        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&fit=crop&crop=top"
+        alt="Gleb Kostrubov"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">✏</div>
+      <div class="skill-name">Product Design</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon-text">UX/UI</div>
+      <div class="skill-name">UX/UI Design</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">☰</div>
+      <div class="skill-name">Icon Design</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">◧</div>
+      <div class="skill-name">Logo Design</div>
+    </div>
+  </div>
+  <div class="skills-row2">
+    <div class="skill-card">
+      <div class="skill-icon-text">&lt;/&gt;</div>
+      <div class="skill-name">Backend</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🖥</div>
+      <div class="skill-name">Frontend</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">◱</div>
+      <div class="skill-name">Motion</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-deco gray"></div>
+  <div class="about-deco yellow"></div>
+  <div class="about-deco cyan"></div>
+  <div class="about-inner">
+    <div class="about-photos">
+      <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&q=80&fit=crop&crop=top" alt="Photo 1">
+      <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&q=80&fit=crop" alt="Photo 2">
+    </div>
+    <div class="about-right">
+      <div class="about-title">ABOUT ME</div>
+      <p class="about-text">
+        Hello again everyone! So, you already know that my name is Gleb. A little about myself: student, 18 yo., athlete-football player, I love creativity since childhood, I live in Donetsk, Ukraine. Why programming? Everything is elementary – I like it, the profession of the future, thanks to which I can provide myself and fulfill my dream – travel, at the moment I specialize in web design, front-end and back-end development, turnkey websites.<br><br>
+        Why should you choose me? I approach each order with great responsibility and love, as I want to make a name for myself, exclude plagiarism and negligence, fully study the project, the client and its target audience, work for quality, trying to make an order as quickly and uniquely as possible, taking into account all the edits and wishes.<br><br>
+        By trusting me, you will get the maximum return for your project, save your nerves and time. If you are interested in me, you want to know something more or use my services, then I will provide all my contacts below.
+      </p>
+    </div>
+    <div class="about-photo-right">
+      <img src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?w=300&q=80&fit=crop" alt="Photo 3">
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-title-center">PORTFOLIO</div>
+  <div style="position:relative;">
+    <div class="portfolio-card">
+      <div class="portfolio-preview">
+        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&q=80" alt="Project preview">
+      </div>
+      <div class="portfolio-info">
+        <h3>Landing Ice-cream</h3>
+        <p>A vibrant, space-themed ice-cream landing page built with modern UI principles. The concept uses cosmic visuals and playful 3D elements to create an unforgettable brand experience. Crafted with custom animations and fully responsive layout.</p>
+        <a href="#" class="portfolio-more">More →</a>
+      </div>
+    </div>
+    <button class="port-arrow left" onclick="prevProject()">←</button>
+    <button class="port-arrow right" onclick="nextProject()">→</button>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-links">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About me</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact:</h4>
+        <ul>
+          <li>Email: notitanic33@gmail.com</li>
+          <li>Inst: notitanic33</li>
+          <li>Calls: +7 (900) – 121 – 54 –54</li>
+        </ul>
+      </div>
+      <div class="footer-brand">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="20,4 36,28 4,28" stroke="#00c2e8" stroke-width="2.5" fill="none"/>
+          <line x1="4" y1="28" x2="36" y2="28" stroke="#00c2e8" stroke-width="2.5"/>
+          <line x1="20" y1="28" x2="20" y2="36" stroke="#00c2e8" stroke-width="2.5"/>
+          <line x1="4" y1="36" x2="36" y2="36" stroke="#00c2e8" stroke-width="2.5"/>
+        </svg>
+        <span class="brand-name">notitanic</span>
+        <a href="#home" class="scroll-top">↑</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Copyright © 2021, Notitanic</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const projects = [
+  {
+    title: "Landing Ice-cream",
+    img: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&q=80",
+    desc: "A vibrant, space-themed ice-cream landing page built with modern UI principles. The concept uses cosmic visuals and playful 3D elements to create an unforgettable brand experience. Crafted with custom animations and fully responsive layout."
+  },
+  {
+    title: "E-commerce Dashboard",
+    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80",
+    desc: "A sleek analytics dashboard designed for an online store. Real-time data visualization, customizable widgets, and an intuitive navigation system that makes complex metrics easy to understand at a glance."
+  },
+  {
+    title: "Mobile App UI",
+    img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80",
+    desc: "A complete mobile UI kit for a fitness tracking app. Clean card-based design, micro-animations, and a carefully considered color system that works beautifully in both light and dark modes."
+  }
+];
+let cur = 0;
+function updateProject() {
+  const p = projects[cur];
+  document.querySelector('.portfolio-preview img').src = p.img;
+  document.querySelector('.portfolio-info h3').textContent = p.title;
+  document.querySelector('.portfolio-info p').textContent = p.desc;
+}
+function nextProject() { cur = (cur + 1) % projects.length; updateProject(); }
+function prevProject() { cur = (cur - 1 + projects.length) % projects.length; updateProject(); }
+
+// Nav active link on scroll
+const sections = document.querySelectorAll('section, footer');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
